@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const createError = require('http-errors');
 
 //Conexión con la BD
 mongoose
@@ -41,9 +42,8 @@ app.use((req,res,next) =>{
 })
 
 //manejador de errores
-app.use(function(req,res,next){
-    console.log(err.message)
-    if (!err.statusCode) err.statusCode = 500
-    res.status(err.statusCode).send(err.message)
-    
-})
+app.use(function(err, req, res, next) {
+    console.log(err.message);
+    if (!err.statusCode) err.statusCode = 500;
+    res.status(err.statusCode).send(err.message);
+});
